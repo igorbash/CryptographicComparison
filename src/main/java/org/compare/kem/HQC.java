@@ -1,9 +1,10 @@
 package org.compare.kem;
 
-import org.bouncycastle.pqc.jcajce.spec.HQCParameterSpec;
+
+import static org.compare.Config.hqcParameterSpec;
 
 public class HQC extends KEMAlg {
     public HQC() {
-        super("HQC", "BCPQC", HQCParameterSpec.hqc256);
+        super("HQC", "BCPQC", hqcParameterSpec);
     }
 }

@@ -6,6 +6,8 @@ import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 
+import static org.compare.Config.falconParameterSpec;
+
 public class Falcon extends SignatureAlg {
     public Falcon() {
         super("Falcon", "BCPQC");
@@ -14,7 +16,7 @@ public class Falcon extends SignatureAlg {
     @Override
     public KeyPair generateKeyPair() throws GeneralSecurityException {
         KeyPairGenerator keyPair = KeyPairGenerator.getInstance(algorithm, provider);
-        keyPair.initialize(FalconParameterSpec.falcon_1024);
+        keyPair.initialize(falconParameterSpec);
         return keyPair.generateKeyPair();
     }
 }

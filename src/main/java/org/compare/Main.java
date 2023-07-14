@@ -9,6 +9,8 @@ import org.compare.signatures.*;
 import java.security.*;
 import java.util.Arrays;
 
+import static org.compare.Config.*;
+
 public class Main {
     static final byte[] MESSAGE = "MESSAGE".getBytes();
 
@@ -48,13 +50,13 @@ public class Main {
 
     static void measureECDH() {
         try {
-            System.out.println("Running ECDH");
+            System.out.println("Running ECDH with " + ecdhParameter + " for " + ecdhKey);
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("ECDH", "BC");
-            keyPairGenerator.initialize(ECNamedCurveTable.getParameterSpec("B-571"));
+            keyPairGenerator.initialize(ECNamedCurveTable.getParameterSpec(ecdhParameter));
             PublicKey recipientPublic = keyPairGenerator.generateKeyPair().getPublic();
             long start = System.nanoTime();
             keyPairGenerator = KeyPairGenerator.getInstance("ECDH", "BC");
-            keyPairGenerator.initialize(ECNamedCurveTable.getParameterSpec("B-571"));
+            keyPairGenerator.initialize(ECNamedCurveTable.getParameterSpec(ecdhParameter));
             PrivateKey initiatorPrivate = keyPairGenerator.generateKeyPair().getPrivate();
             ECDH.initiatorAgreementBasic(initiatorPrivate, recipientPublic);
             long end = System.nanoTime();
@@ -66,8 +68,15 @@ public class Main {
     }
 
     static void measureSignAlgorithmTime(SignatureAlg signatureAlg) {
+        String specs = "";
+        switch (signatureAlg.getAlgorithm()) {
+            case "RSA" -> specs = String.valueOf(rsaKeySize);
+            case "Dilithium" -> specs = dilithiumParameterSpec.getName();
+            case "Falcon" -> specs = falconParameterSpec.getName();
+            case "Sphincs+" -> specs = sphincsPlusParameterSpec.getName();
+        }
         try {
-            System.out.println("Running " + signatureAlg.getAlgorithm());
+            System.out.println("Running " + signatureAlg.getAlgorithm() + " " + specs);
 
             long start = System.nanoTime();
             KeyPair keyPair = signatureAlg.generateKeyPair();
@@ -93,7 +102,14 @@ public class Main {
     static void measureKEM() {
         KEMAlg[] kemAlgs = {new McEliece(), new BIKE(), new HQC(), new Kyber()};
         Arrays.stream(kemAlgs).toList().forEach(alg -> {
-            System.out.println("Running " + alg.getName());
+            String specs = "";
+            switch (alg.getName()) {
+                case "CMCE" -> specs = cmceParameterSpec.getName();
+                case "BIKE" -> specs = bikeParameterSpec.getName();
+                case "HQC" -> specs = hqcParameterSpec.getName();
+                case "Kyber" -> specs = kyberParameterSpec.getName();
+            }
+            System.out.println("Running " + alg.getName() + " " + specs);
             alg.kem();
             System.out.println("===========================================");
         });

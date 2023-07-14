@@ -1,9 +1,9 @@
 package org.compare.kem;
 
-import org.bouncycastle.pqc.jcajce.spec.CMCEParameterSpec;
+import static org.compare.Config.cmceParameterSpec;
 
 public class McEliece extends KEMAlg {
     public McEliece() {
-        super("CMCE", "BCPQC", CMCEParameterSpec.mceliece8192128);
+        super("CMCE", "BCPQC", cmceParameterSpec);
     }
 }

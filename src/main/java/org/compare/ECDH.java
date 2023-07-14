@@ -10,12 +10,14 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import static org.compare.Config.ecdhKey;
+
 public class ECDH {
     public static byte[] initiatorAgreementBasic(PrivateKey initiatorPrivate, PublicKey recipientPublic) throws GeneralSecurityException {
         KeyAgreement agreement = KeyAgreement.getInstance("ECCDH", "BC");
         agreement.init(initiatorPrivate);
         agreement.doPhase(recipientPublic, true);
-        SecretKey agreedKey = agreement.generateSecret("AES[256]");
+        SecretKey agreedKey = agreement.generateSecret(ecdhKey);
         return agreedKey.getEncoded();
     }
 
@@ -23,7 +25,7 @@ public class ECDH {
         KeyAgreement agreement = KeyAgreement.getInstance("ECCDH", "BC");
         agreement.init(recipientPrivate);
         agreement.doPhase(initiatorPublic, true);
-        SecretKey agreedKey = agreement.generateSecret("AES[256]");
+        SecretKey agreedKey = agreement.generateSecret(ecdhKey);
         return agreedKey.getEncoded();
     }
 

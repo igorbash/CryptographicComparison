@@ -1,9 +1,10 @@
 package org.compare.kem;
 
-import org.bouncycastle.pqc.jcajce.spec.BIKEParameterSpec;
+
+import static org.compare.Config.bikeParameterSpec;
 
 public class BIKE extends KEMAlg {
     public BIKE() {
-        super("BIKE", "BCPQC", BIKEParameterSpec.bike256);
+        super("BIKE", "BCPQC", bikeParameterSpec);
     }
 }

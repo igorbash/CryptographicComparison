@@ -7,6 +7,8 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.*;
 import java.security.spec.RSAKeyGenParameterSpec;
 
+import static org.compare.Config.rsaKeySize;
+
 public class RSA extends SignatureAlg {
     public RSA() {
         super("RSA", "BC");
@@ -14,7 +16,7 @@ public class RSA extends SignatureAlg {
 
     public KeyPair generateKeyPair() throws GeneralSecurityException {
         KeyPairGenerator keyPair = KeyPairGenerator.getInstance(algorithm, provider);
-        keyPair.initialize(new RSAKeyGenParameterSpec(4096, RSAKeyGenParameterSpec.F4));
+        keyPair.initialize(new RSAKeyGenParameterSpec(rsaKeySize, RSAKeyGenParameterSpec.F4));
         return keyPair.generateKeyPair();
     }
 

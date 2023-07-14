@@ -1,9 +1,9 @@
 package org.compare.kem;
 
-import org.bouncycastle.pqc.jcajce.spec.KyberParameterSpec;
+import static org.compare.Config.kyberParameterSpec;
 
 public class Kyber extends KEMAlg {
     public Kyber() {
-        super("Kyber", "BCPQC", KyberParameterSpec.kyber1024);
+        super("Kyber", "BCPQC", kyberParameterSpec);
     }
 }

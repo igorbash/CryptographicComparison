@@ -2,7 +2,7 @@ package org.compare.signatures;
 
 import java.security.*;
 
-import org.bouncycastle.pqc.jcajce.spec.DilithiumParameterSpec;
+import static org.compare.Config.dilithiumParameterSpec;
 
 public class Dilithium extends SignatureAlg {
     public Dilithium() {
@@ -11,7 +11,7 @@ public class Dilithium extends SignatureAlg {
 
     public KeyPair generateKeyPair() throws GeneralSecurityException {
         KeyPairGenerator keyPair = KeyPairGenerator.getInstance(algorithm, provider);
-        keyPair.initialize(DilithiumParameterSpec.dilithium5);
+        keyPair.initialize(dilithiumParameterSpec);
         return keyPair.generateKeyPair();
     }
 }
