@@ -20,7 +20,7 @@ public abstract class KEMAlg {
         this.algorithmParameterSpec = algorithmParameterSpec;
     }
 
-    public void kem() {
+    public Double kem() {
         try {
             long start = System.nanoTime();
             KeyPair keyPair = keyGeneration();
@@ -29,9 +29,11 @@ public abstract class KEMAlg {
             long end = System.nanoTime();
             System.out.println("KEM: " + (end - start) / 1_000_000_000.00 + " seconds");
             assert Arrays.equals(secretKeyWithEncapsulationEncryption.getEncoded(), secretKeyWithEncapsulationDecryption.getEncoded());
+            return (end - start) / 1_000_000_000.00;
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
+        return -1.0;
     }
 
     private KeyPair keyGeneration() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException {
